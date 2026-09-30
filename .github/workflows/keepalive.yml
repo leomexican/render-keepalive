@@ -1,0 +1,26 @@
+name: Render Keep Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check time and ping Render
+        env:
+          RENDER_URL: "https://fishtoshark-bot-ohio.onrender.com"
+        run: |
+          HOUR=$(TZ=Europe/Madrid date +%H)
+
+          if [ "$HOUR" -ge 8 ] && [ "$HOUR" -lt 24 ]; then
+            echo "Horario activo: ${HOUR}:00"
+            curl -fsS --max-time 30 "$RENDER_URL"
+            echo ""
+            echo "Render respondió correctamente."
+          else
+            echo "Fuera del horario 08:00-00:00. No se hace ninguna petición."
+          fi
