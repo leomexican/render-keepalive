@@ -18,7 +18,7 @@ jobs:
 
           if [ "$HOUR" -ge 8 ] && [ "$HOUR" -lt 24 ]; then
             echo "Horario activo: ${HOUR}:00"
-            curl -fsS --max-time 30 "$RENDER_URL"
+            curl -fsS --max-time 130 "$RENDER_URL"
             echo ""
             echo "Render respondió correctamente."
           else
